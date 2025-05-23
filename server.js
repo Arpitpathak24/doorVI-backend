@@ -13,9 +13,9 @@ admin.initializeApp({
 
 const app = express();
 
-// Enable CORS for all origins (or specify origin for security)
+// Enable CORS for your frontend domain
 app.use(cors({
-  origin: "https://doorvi-fd448.web.app", // ✅ only allow your frontend
+  origin: "https://doorvi-fd448.web.app",
   methods: ["POST"],
   allowedHeaders: ["Content-Type"]
 }));
@@ -27,30 +27,35 @@ app.use(express.json());
 app.post("/send-notification", async (req, res) => {
   const { targetToken, message } = req.body;
 
+  if (!targetToken) {
+    return res.status(400).json({ success: false, error: "targetToken is required" });
+  }
+
   const payload = {
+    token: targetToken,
     notification: {
       title: "PingMe - Incoming Call",
       body: message || "A visitor is calling you!",
-      icon: "https://img.icons8.com/color/96/video-call.png"
+      imageUrl: "https://img.icons8.com/color/96/video-call.png"
     },
     webpush: {
-      fcm_options: {
+      fcmOptions: {
         link: "https://doorvi-fd448.web.app/resident_test.html"
       }
     }
   };
 
   try {
-    const response = await admin.messaging().sendToDevice(targetToken, payload);
-    res.status(200).send({ success: true, response });
+    const response = await admin.messaging().send(payload);
+    res.status(200).json({ success: true, response });
   } catch (error) {
     console.error("Error sending notification:", error);
-    res.status(500).send({ success: false, error: error.message || error });
+    res.status(500).json({ success: false, error: error.message || error });
   }
 });
 
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });

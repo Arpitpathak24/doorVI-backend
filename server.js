@@ -1,10 +1,11 @@
 const express = require("express");
 const admin = require("firebase-admin");
 
-const serviceAccount = require("./your-service-account.json");
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
+  databaseURL: 'https://doorvi-fd448-default-rtdb.asia-southeast1.firebasedatabase.app/'  // Your Firebase Database URL
 });
 
 const app = express();
@@ -21,7 +22,7 @@ app.post("/send-notification", async (req, res) => {
     },
     webpush: {
       fcm_options: {
-        link: "https://yourdomain.com/resident.html",
+        link: "https://doorvi-fd448.web.app/resident_test.html",
       },
     },
   };

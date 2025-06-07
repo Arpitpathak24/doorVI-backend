@@ -1,15 +1,20 @@
 {
   "name": "doorvi-backend",
   "version": "1.0.0",
+  "description": "Backend for Doorvi - sends FCM notifications",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "doorvi",
+    "backend",
+    "fcm",
+    "firebase-admin",
+    "express"
+  ],
+  "author": "Arpit Pathak",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^5.1.0",

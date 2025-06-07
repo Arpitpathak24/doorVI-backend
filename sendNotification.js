@@ -17,7 +17,12 @@ const message = {
   notification: {
     title: "PingMe - Incoming Call",
     body: "A visitor is calling you!",
-    imageUrl: "https://img.icons8.com/color/96/video-call.png"
+    icon: "https://img.icons8.com/color/96/video-call.png"
+  },
+  data: {
+    click_action: "https://doorvi-fd448.web.app/resident_test.html",
+    title: "PingMe - Incoming Call",
+    body: "A visitor is calling you!"
   },
   webpush: {
     fcmOptions: {

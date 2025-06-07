@@ -36,7 +36,12 @@ app.post("/send-notification", async (req, res) => {
     notification: {
       title: "PingMe - Incoming Call",
       body: message || "A visitor is calling you!",
-      imageUrl: "https://img.icons8.com/color/96/video-call.png"
+      icon: "https://img.icons8.com/color/96/video-call.png"
+    },
+    data: {
+      click_action: "https://doorvi-fd448.web.app/resident_test.html",
+      title: "PingMe - Incoming Call",
+      body: message || "A visitor is calling you!"
     },
     webpush: {
       fcmOptions: {
@@ -47,11 +52,17 @@ app.post("/send-notification", async (req, res) => {
 
   try {
     const response = await admin.messaging().send(payload);
+    console.log("✅ Notification sent:", response);
     res.status(200).json({ success: true, response });
   } catch (error) {
-    console.error("Error sending notification:", error);
+    console.error("❌ Error sending notification:", error);
     res.status(500).json({ success: false, error: error.message || error });
   }
+});
+
+// Optional wakeup endpoint (safe to keep, helps Render free tier wakeup)
+app.get("/", (req, res) => {
+  res.status(200).send("Backend is running.");
 });
 
 // Start the server

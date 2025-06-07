@@ -35,8 +35,7 @@ app.post("/send-notification", async (req, res) => {
     token: targetToken,
     notification: {
       title: "PingMe - Incoming Call",
-      body: message || "A visitor is calling you!",
-      icon: "https://img.icons8.com/color/96/video-call.png"
+      body: message || "A visitor is calling you!"
     },
     data: {
       click_action: "https://doorvi-fd448.web.app/resident_test.html",
@@ -44,6 +43,9 @@ app.post("/send-notification", async (req, res) => {
       body: message || "A visitor is calling you!"
     },
     webpush: {
+      notification: {
+        icon: "https://img.icons8.com/color/96/video-call.png"
+      },
       fcmOptions: {
         link: "https://doorvi-fd448.web.app/resident_test.html"
       }
@@ -60,7 +62,7 @@ app.post("/send-notification", async (req, res) => {
   }
 });
 
-// Optional wakeup endpoint (safe to keep, helps Render free tier wakeup)
+// Optional wakeup endpoint
 app.get("/", (req, res) => {
   res.status(200).send("Backend is running.");
 });
